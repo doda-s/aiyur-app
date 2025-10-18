@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Aiyur',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: const HomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(title: 'Aiyur'),
     );
   }
 }
