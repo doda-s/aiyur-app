@@ -1,6 +1,5 @@
 import 'package:aiyurapp/widgets/category_selector.dart';
 import 'package:aiyurapp/widgets/search_bar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
