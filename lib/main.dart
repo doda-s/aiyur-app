@@ -1,5 +1,6 @@
-// import 'package:aiyurapp/widgets/search_bar.dart';
+import 'package:aiyurapp/widgets/category_selector.dart';
 import 'package:aiyurapp/widgets/search_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -47,7 +48,7 @@ class TopAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200, // in logical pixels
+      height: 190, // in logical pixels
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(color: Colors.blue[500]),
       // Row is a horizontal, linear layout.
@@ -73,6 +74,7 @@ class TopAppBar extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           const SearchBarWidget(),
+          const CategorySelector(),
         ],
       ),
     );
@@ -97,9 +99,7 @@ class PageContent extends StatelessWidget {
                       .titleLarge,
             ),
           ),
-          Center(
-            child: ClickableText(),
-          ),
+          Center(child: ClickableText()),
         ],
       ),
     );

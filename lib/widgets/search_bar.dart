@@ -24,7 +24,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       height: 50,
       // color: Colors.red,
       decoration: BoxDecoration(
-        color: Colors.red,
+        color: Colors.green,
         border: Border.all(color: Colors.grey, width: 1),
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
       ),
