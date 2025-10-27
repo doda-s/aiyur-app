@@ -1,38 +1,106 @@
+import 'package:aiyurapp/widgets/category_selector.dart';
+import 'package:aiyurapp/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'modules/home/home_page.dart';
-
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MaterialApp(
+      title: 'My app', // used by the OS task switcher
+      home: SafeArea(child: Scaffold(body: PageContent())),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ClickableText extends StatefulWidget {
+  const ClickableText({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<StatefulWidget> createState() => _ClickableTextState();
+}
+
+class _ClickableTextState extends State<ClickableText> {
+  bool _clicked = false;
+
+  void _toggleText() {
+    setState(() {
+      _clicked = !_clicked; // alterna o valor
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Aiyur',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+    return TextButton(
+      onPressed: _toggleText,
+      child: Text(
+        _clicked ? 'Você clicou!' : 'Clique em mim!',
+        style: const TextStyle(fontSize: 18, color: Colors.pink),
       ),
-      home: const HomePage(title: 'Aiyur'),
+    );
+  }
+}
+
+class TopAppBar extends StatelessWidget {
+  const TopAppBar({required this.title, super.key});
+
+  final Widget title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 190, // in logical pixels
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(color: Colors.blue[500]),
+      // Row is a horizontal, linear layout.
+      child: Column(
+        children: [
+          // Profile and AppIcon
+          Row(
+            children: [
+              const IconButton(
+                icon: Icon(Icons.menu),
+                tooltip: 'Navigation menu',
+                onPressed: null, // null disables the button
+              ),
+              // Expanded expands its child
+              // to fill the available space.
+              Expanded(child: title),
+              const IconButton(
+                icon: Icon(Icons.search),
+                tooltip: 'Search',
+                onPressed: null,
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          const SearchBarWidget(),
+          const CategorySelector(),
+        ],
+      ),
+    );
+  }
+}
+
+class PageContent extends StatelessWidget {
+  const PageContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          TopAppBar(
+            title: Text(
+              "teste",
+              style:
+                  Theme.of(context) //
+                      .primaryTextTheme
+                      .titleLarge,
+            ),
+          ),
+          Center(child: ClickableText()),
+        ],
+      ),
     );
   }
 }
