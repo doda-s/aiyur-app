@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CategorySelector extends StatefulWidget {
-  const CategorySelector({super.key});
+class CategorySelector extends StatelessWidget {
+  final int selectedIndex;
+  final Function(int) onCategorySelected;
 
-  @override
-  State<CategorySelector> createState() => _CategorySelectorState();
-}
+  CategorySelector({
+    super.key,
+    required this.selectedIndex,
+    required this.onCategorySelected,
+  });
 
-class _CategorySelectorState extends State<CategorySelector> {
-  int _selectedIndex = 0;
-
-  // TODO: ver como passar esses valores como refencia para poder trocar os filmes/series que aparecem na tela
-  final List<String> categories = [
-    "All",
-    "Trending",
-    "Popular",
-    "Upcoming",
-  ];
+  final List<String> categories = ["All", "Trending", "Popular", "Upcoming"];
 
   @override
   Widget build(BuildContext context) {
@@ -24,27 +18,22 @@ class _CategorySelectorState extends State<CategorySelector> {
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0F0F0), // cinza claro do fundo
+        color: const Color(0xFFF0F0F0),
         borderRadius: BorderRadius.circular(32),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: List.generate(categories.length, (index) {
-          final isSelected = _selectedIndex == index;
+          final isSelected = selectedIndex == index;
 
           return Expanded(
             child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
+              onTap: () => onCategorySelected(index),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.easeInOut,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.white : Color(0xFFF0F0F0),
+                  color: isSelected ? Colors.white : const Color(0xFFF0F0F0),
                   borderRadius: BorderRadius.circular(32),
                 ),
                 child: Center(
