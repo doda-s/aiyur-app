@@ -1,4 +1,6 @@
 import 'package:aiyurapp/widgets/home_page/search_bar.dart';
+import 'package:aiyurapp/widgets/list_page/list_detail_page.dart';
+import 'package:aiyurapp/widgets/list_page/list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:aiyurapp/widgets/home_page/movie_card.dart';
 import 'package:aiyurapp/widgets/movie_detail/movie_detail.dart';
@@ -10,6 +12,9 @@ void main() {
     MaterialApp(
       title: 'My App',
       initialRoute: '/',
+      routes: {
+        '/ListsDetailPage': (context) => const ListsDetailPage(),
+      },
       onGenerateRoute: (settings) {
         if (settings.name == '/movieDetail') {
           final args = settings.arguments as Map<String, String>;
@@ -43,7 +48,7 @@ class TopAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 240, // aumentei um pouco para caber o CategorySelector
+      height: 190, // aumentei um pouco para caber o CategorySelector
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(color: Colors.blue[500]),
       child: Column(
@@ -57,13 +62,15 @@ class TopAppBar extends StatelessWidget {
               ),
               Expanded(child: title),
               ProfileButton(
+                //TODO: ADICIONAR POP UP
                 onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProfilePage(),
-                    ),
-                  ),
+                  print("clicou no profile superior")
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const ProfilePage(),
+                  //   ),
+                  // ),
                 },
               ),
             ],
@@ -198,12 +205,12 @@ class _PageContentState extends State<PageContent> {
 
   Widget _getBody() {
     switch (_currentBottomIndex) {
-      case 0: // Filmes
+      case 0: // Movies
         return Column(
           children: [
             TopAppBar(
               title: const Text(
-                "Catálogo de Filmes",
+                "Movies",
                 style: TextStyle(color: Colors.white),
               ),
               selectedCategoryIndex: _selectedCategoryIndex,
@@ -255,34 +262,12 @@ class _PageContentState extends State<PageContent> {
             ),
           ],
         );
-      case 1: // Favoritos
-        return Column(
-          children: [
-            TopAppBar(
-              title: const Text(
-                "Favoritos",
-                style: TextStyle(color: Colors.white),
-              ),
-              selectedCategoryIndex: _selectedCategoryIndex,
-              onCategorySelected: (index) {
-                setState(() {
-                  _selectedCategoryIndex = index;
-                });
-              },
-            ),
-            Expanded(
-              child: Center(
-                child: Text(
-                  "Lista de Favoritos",
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-            ),
-          ],
-        );
 
-      case 2: // Perfil
+      case 1: // Profile
         return const ProfilePage();
+
+      case 2: // Lists
+        return const MyListsPage();
 
       default:
         return const SizedBox();
@@ -298,11 +283,8 @@ class _PageContentState extends State<PageContent> {
         onTap: (index) => setState(() => _currentBottomIndex = index),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.movie), label: "Filmes"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: "Favoritos",
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Perfil"),
+          BottomNavigationBarItem(icon: Icon(Icons.supervised_user_circle), label: "Profile"),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "My Lists"),
         ],
       ),
     );

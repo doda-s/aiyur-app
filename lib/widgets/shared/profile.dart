@@ -10,7 +10,7 @@ class ProfileButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: CircleAvatar(
-        radius: 20, // tamanho menor do perfil
+        radius: 20,
         backgroundImage: const NetworkImage(
           "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg",
         ),

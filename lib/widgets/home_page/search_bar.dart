@@ -22,7 +22,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     return Container(
       padding: const EdgeInsets.all(8.0),
       height: 50,
-      // color: Colors.red,
       decoration: BoxDecoration(
         color: Colors.green,
         border: Border.all(color: Colors.grey, width: 1),
@@ -36,7 +35,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               onChanged: _onSearchChanged,
               decoration: const InputDecoration(
                 icon: Icon(Icons.search),
-                hintText: 'Buscar filmes ou séries...',
+                hintText: 'Search movies...',
               ),
             ),
           ),
