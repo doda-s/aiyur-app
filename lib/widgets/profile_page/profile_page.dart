@@ -6,7 +6,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Column(
+      body: Column(
         children: [
           Stack(
             alignment: Alignment.center,
@@ -20,7 +20,6 @@ class ProfilePage extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-
               Positioned(
                 bottom: -60,
                 left: 32,
@@ -55,7 +54,7 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(height: 8),
                 Text(
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                  "Proin vitae libero justo. Phasellus at orci velit. In hac duis.",
+                      "Proin vitae libero justo. Phasellus at orci velit. In hac duis.",
                   textAlign: TextAlign.left,
                 ),
               ],
@@ -63,7 +62,6 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      body: 
     );
   }
 }
