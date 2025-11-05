@@ -23,7 +23,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       padding: const EdgeInsets.all(8.0),
       height: 50,
       decoration: BoxDecoration(
-        color: Color(0xFFF0F0F0),
+        color: Color(0xFFF5F5F5),
         border: Border.all(color: Colors.grey, width: 1),
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
       ),
