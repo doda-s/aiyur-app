@@ -18,7 +18,6 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
-  // ----------------------- Popup de Edição -----------------------
   void _mostrarPopupEdicao() {
     _nameController.text = _name;
     _usernameController.text = _username;
@@ -63,12 +62,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     cursorColor: const Color(0xFF4A4A4A),
                     style: const TextStyle(
                       color: Color(0xFF2D2D2D),
-                    ), // texto preto
+                    ),
                     decoration: const InputDecoration(
                       labelText: "Name",
                       labelStyle: TextStyle(
                         color: Color(0xFF5E5E5E),
-                      ), // label cinza
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -77,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     cursorColor: const Color(0xFF4A4A4A),
                     style: const TextStyle(
                       color: Color(0xFF2D2D2D),
-                    ), // texto preto
+                    ),
                     decoration: const InputDecoration(
                       labelText: "Username",
                       labelStyle: TextStyle(color: Color(0xFF5E5E5E)),
@@ -89,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     cursorColor: const Color(0xFF4A4A4A),
                     style: const TextStyle(
                       color: Color(0xFF2D2D2D),
-                    ), // texto preto
+                    ),
                     decoration: const InputDecoration(
                       labelText: "Description",
                       labelStyle: TextStyle(color: Color(0xFF5E5E5E)),
@@ -134,7 +133,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // ----------------------- Popup de Logout -----------------------
   void _logout() {
     showDialog(
       context: context,
@@ -197,7 +195,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // ----------------------- Corpo da Página -----------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(

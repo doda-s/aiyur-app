@@ -5,7 +5,6 @@ import 'package:aiyurapp/widgets/home_page/movie_card.dart';
 import 'package:aiyurapp/widgets/profile_page/profile_page.dart';
 import 'package:aiyurapp/widgets/shared/profile.dart';
 
-// ---------------- TopAppBar ----------------
 class TopAppBar extends StatelessWidget {
   final Widget title;
   final int selectedCategoryIndex;
@@ -24,7 +23,7 @@ class TopAppBar extends StatelessWidget {
       height: 190,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: const BoxDecoration(
-        color: Color(0xFFE0E0E0), // Cinza neutro claro
+        color: Color(0xFFE0E0E0), 
       ),
       child: Column(
         children: [
@@ -54,7 +53,6 @@ class TopAppBar extends StatelessWidget {
   }
 }
 
-// ---------------- CategorySelector ----------------
 class CategorySelector extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onCategorySelected;
@@ -89,7 +87,7 @@ class CategorySelector extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? const Color(0xFF4A4A4A) // destaque escuro
+                      ? const Color(0xFF4A4A4A)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(32),
                 ),
@@ -115,7 +113,6 @@ class CategorySelector extends StatelessWidget {
   }
 }
 
-// ---------------- PageContent ----------------
 class PageContent extends StatefulWidget {
   const PageContent({super.key});
 
@@ -174,7 +171,7 @@ class _PageContentState extends State<PageContent> {
 
   Widget _getBody() {
     switch (_currentBottomIndex) {
-      case 0: // Movies
+      case 0:
         return Column(
           children: [
             TopAppBar(

@@ -11,7 +11,7 @@ class RegisterPage extends StatelessWidget {
     final passwordController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F2), // fundo neutro
+      backgroundColor: const Color(0xFFF2F2F2),
       appBar: AppBar(
         title: const Text("Create Account"),
         backgroundColor: const Color(0xFFF2F2F2),
@@ -32,7 +32,6 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 32),
 
-            // Nome
             TextField(
               controller: nameController,
               decoration: InputDecoration(
@@ -59,7 +58,6 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // E-mail
             TextField(
               controller: emailController,
               decoration: InputDecoration(
@@ -86,7 +84,6 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Senha
             TextField(
               controller: passwordController,
               obscureText: true,
@@ -114,7 +111,6 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            // Botão de registro
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -138,7 +134,6 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Link para login
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

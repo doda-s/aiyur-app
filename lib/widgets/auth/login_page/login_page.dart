@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
     final passwordController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F2), // fundo neutro
+      backgroundColor: const Color(0xFFF2F2F2),
       appBar: AppBar(
         title: const Text("Login"),
         backgroundColor: const Color(0xFFF2F2F2),
@@ -32,7 +32,6 @@ class LoginPage extends StatelessWidget {
             ),
             const SizedBox(height: 32),
 
-            // Campo de e-mail
             TextField(
               controller: emailController,
               decoration: InputDecoration(
@@ -59,7 +58,6 @@ class LoginPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Campo de senha
             TextField(
               controller: passwordController,
               obscureText: true,
@@ -87,7 +85,6 @@ class LoginPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            // Botão de login
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -110,7 +107,6 @@ class LoginPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Link para cadastro
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

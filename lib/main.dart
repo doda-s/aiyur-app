@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
       title: 'My App',
       debugShowCheckedModeBanner: false,
 
-      // 👉 o app começa pela tela de login
       initialRoute: '/login',
 
       routes: {

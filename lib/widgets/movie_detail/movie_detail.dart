@@ -21,8 +21,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     {"title": "Sci-Fi Collection", "description": "Best futuristic titles"},
   ];
 
-  // ----------------------- Popup de Seleção de Lista -----------------------
-  void _mostrarPopupListas() {
+  void _popUpList() {
     showDialog(
       context: context,
       builder: (context) {
@@ -61,7 +60,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                     trailing: const Icon(Icons.add, color: Color(0xFF4A4A4A)),
                     onTap: () {
                       Navigator.pop(context);
-                      _mostrarPopupConfirmacao(list["title"]!);
+                      _popUpConfirm(list["title"]!);
                     },
                   );
                 }).toList(),
@@ -82,8 +81,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     );
   }
 
-  // ----------------------- Popup de Confirmação -----------------------
-  void _mostrarPopupConfirmacao(String listName) {
+  void _popUpConfirm(String listName) {
     showDialog(
       context: context,
       builder: (context) {
@@ -124,7 +122,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     );
   }
 
-  // ----------------------- Interface Principal -----------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,7 +131,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            // Fundo com gradiente
             Container(
               height: 300,
               decoration: BoxDecoration(
@@ -159,7 +155,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
               ),
             ),
 
-            // Conteúdo principal
             Padding(
               padding: const EdgeInsets.only(top: 200),
               child: Container(
@@ -224,14 +219,13 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Botões de ação
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                             child: OutlinedButton(
                               onPressed: () =>
-                                  debugPrint("clicou no coração ❤️"),
+                                  debugPrint("clicou no coração"),
                               style: OutlinedButton.styleFrom(
                                 side: const BorderSide(
                                   color: Color(0xFF4A4A4A),
@@ -245,7 +239,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: OutlinedButton(
-                              onPressed: _mostrarPopupListas,
+                              onPressed: _popUpList,
                               style: OutlinedButton.styleFrom(
                                 side: const BorderSide(
                                   color: Color(0xFF4A4A4A),
@@ -260,7 +254,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Informações do filme
                       const Row(
                         children: [
                           Icon(Icons.calendar_today, size: 18),
