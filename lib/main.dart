@@ -6,8 +6,10 @@ import 'package:aiyurapp/widgets/home_page/movie_card.dart';
 import 'package:aiyurapp/widgets/movie_detail/movie_detail.dart';
 import 'package:aiyurapp/widgets/profile_page/profile_page.dart';
 import 'package:aiyurapp/widgets/shared/profile.dart';
+import 'firebase_core/firebase_core.dart';
 
 void main() {
+  initFirebase();
   runApp(
     MaterialApp(
       title: 'My App',

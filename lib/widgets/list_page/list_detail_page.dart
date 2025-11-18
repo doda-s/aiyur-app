@@ -9,8 +9,8 @@ class ListsDetailPage extends StatefulWidget {
 }
 
 class _ListsDetailPageState extends State<ListsDetailPage> {
-  int _currentBottomIndex = 0;
-  int _selectedCategoryIndex = 0;
+  final int _currentBottomIndex = 0;
+  final int _selectedCategoryIndex = 0;
   int? _selectedMovieIndex;
 
   final List<Map<String, String>> exampleMovieList = [

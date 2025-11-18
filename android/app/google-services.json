@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "544878499289",
+    "project_id": "aiyur-app",
+    "storage_bucket": "aiyur-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544878499289:android:29b31a95a6656aceb035c8",
+        "android_client_info": {
+          "package_name": "com.example.aiyurapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsE5Pt6xjteFHN4OtJwvsFUmQm7VEFaEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
