@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:aiyurapp/widgets/home_page/home_page.dart';
 import 'package:aiyurapp/widgets/list_page/list_detail_page.dart';
 import 'package:aiyurapp/widgets/movie_detail/movie_detail.dart';
+import 'firebase_core/firebase_core.dart';
 
 void main() {
+  initFirebase();
   runApp(const MyApp());
 }
 
