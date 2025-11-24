@@ -1,7 +1,7 @@
 import 'package:aiyurapp/widgets/auth/login_page.dart';
 import 'package:aiyurapp/widgets/auth/register_page.dart';
 import 'package:flutter/material.dart';
-import 'package:aiyurapp/widgets/home_page/home_page.dart';
+import 'package:aiyurapp/widgets/page_content/page_content.dart';
 import 'package:aiyurapp/widgets/list_page/list_detail_page.dart';
 import 'package:aiyurapp/widgets/movie_detail/movie_detail.dart';
 import 'package:aiyurapp/modules/firebase_config.dart';
