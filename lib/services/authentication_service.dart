@@ -5,6 +5,10 @@ Future<UserCredential?> createUserWithEmailAndPassword(String emailAddress, pass
   return await AuthenticationModule.createUserWithEmailAndPassword(emailAddress, password);
 }
 
+Future<UserCredential?> signInUserWithEmailAndPassword(String emailAddress, password) async {
+  return await AuthenticationModule.signInUserWithEmailAndPassword(emailAddress, password);
+}
+
 Future<void> signOutUser() async {
   await AuthenticationModule.signOut();
 }

@@ -15,15 +15,31 @@ class AuthenticationModule {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
-        return null;
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
-        return null;
       }
     } catch (e) {
       print(e);
-      return null;
     }
+    return null;
+  }
+
+  static Future<UserCredential?> signInUserWithEmailAndPassword(String emailAddress,
+      String password) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailAddress,
+          password: password
+      );
+      return credential;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print("Esse usuário não existe.");
+      } else if (e.code == 'wrong-password') {
+        print("Senha errada, guerreiro.");
+      }
+    }
+    return null;
   }
 
   static Future<void> signOut() async {
