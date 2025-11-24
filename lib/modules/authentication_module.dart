@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationModule {
-  static Future<String?> createUserWithEmailAndPassword(String emailAddress,
+  static Future<UserCredential?> createUserWithEmailAndPassword(String emailAddress,
       String password) async {
     try {
       print("Ai, estou registrando");
@@ -11,19 +11,19 @@ class AuthenticationModule {
         password: password,
       );
       print("Usuário registrado XD");
+      return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
-        return 'The password provided is too weak.';
+        return null;
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
-        return 'The account already exists for that email.';
+        return null;
       }
     } catch (e) {
       print(e);
-      return 'Internal error ocurred.';
+      return null;
     }
-    return null;
   }
 
   static Future<void> signOut() async {
