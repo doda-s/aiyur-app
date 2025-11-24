@@ -26,7 +26,7 @@ class AuthenticationModule {
     return null;
   }
 
-  Future<void> signOut() async {
+  static Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 }
