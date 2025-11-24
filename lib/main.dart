@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:aiyurapp/widgets/home_page/home_page.dart';
 import 'package:aiyurapp/widgets/list_page/list_detail_page.dart';
 import 'package:aiyurapp/widgets/movie_detail/movie_detail.dart';
-import 'firebase_core/firebase_core.dart';
+import 'package:aiyurapp/modules/firebase_config.dart';
 
-void main() {
-  initFirebase();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupFirebase();
   runApp(const MyApp());
 }
 
