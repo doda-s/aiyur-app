@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationModule {
-  static Future<UserCredential?> createUserWithEmailAndPassword(String emailAddress,
+  static Future<AuthResult> createUserWithEmailAndPassword(String emailAddress,
       String password) async {
+    String exceptionCode;
     try {
       print("Ai, estou registrando");
       final credential = await FirebaseAuth.instance
@@ -11,38 +12,36 @@ class AuthenticationModule {
         password: password,
       );
       print("Usuário registrado XD");
-      return credential;
+      return AuthResult(userCredential: credential);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
+      exceptionCode = e.code;
     }
-    return null;
+    return AuthResult(errorCode: exceptionCode);
   }
 
-  static Future<UserCredential?> signInUserWithEmailAndPassword(String emailAddress,
+  static Future<AuthResult> signInUserWithEmailAndPassword(String emailAddress,
       String password) async {
+    String errorCode;
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailAddress,
           password: password
       );
-      return credential;
+      return AuthResult(userCredential: credential);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print("Esse usuário não existe.");
-      } else if (e.code == 'wrong-password') {
-        print("Senha errada, guerreiro.");
-      }
+      errorCode = e.code;
     }
-    return null;
+    return AuthResult(errorCode: errorCode);
   }
 
   static Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
+}
+
+class AuthResult {
+  final UserCredential? userCredential;
+  final String? errorCode;
+
+  AuthResult({this.userCredential, this.errorCode});
 }
