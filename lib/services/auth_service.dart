@@ -1,18 +1,19 @@
+import 'package:aiyurapp/models/auth_result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthenticationModule {
-  static UserCredential? _userCredential;
+class AuthService {
 
-  static UserCredential? getUserCredential() {
-    return _userCredential;
-  }
+  AuthService._();
+  static final AuthService instance = AuthService._();
 
-  static Future<AuthResult> createUserWithEmailAndPassword(String emailAddress,
+  final _auth = FirebaseAuth.instance;
+
+  Future<AuthResult> createUserWithEmailAndPassword(String emailAddress,
       String password) async {
     String exceptionCode;
     try {
       print("Ai, estou registrando");
-      _userCredential = await FirebaseAuth.instance
+      final UserCredential _userCredential = await _auth
           .createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
@@ -25,11 +26,11 @@ class AuthenticationModule {
     return AuthResult(errorCode: exceptionCode);
   }
 
-  static Future<AuthResult> signInUserWithEmailAndPassword(String emailAddress,
+  Future<AuthResult> signInUserWithEmailAndPassword(String emailAddress,
       String password) async {
     String errorCode;
     try {
-      final _userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final UserCredential _userCredential = await _auth.signInWithEmailAndPassword(
           email: emailAddress,
           password: password
       );
@@ -40,14 +41,12 @@ class AuthenticationModule {
     return AuthResult(errorCode: errorCode);
   }
 
-  static Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
-}
 
-class AuthResult {
-  final UserCredential? userCredential;
-  final String? errorCode;
+  User? getCurrentUser() {
+    return _auth.currentUser;
+  }
 
-  AuthResult({this.userCredential, this.errorCode});
 }
