@@ -1,4 +1,4 @@
-import 'package:aiyurapp/services/authentication_service.dart';
+import 'package:aiyurapp/controllers/authentication_controller.dart';
 import 'package:aiyurapp/widgets/auth/common/auth_buttom_text.dart';
 import 'package:aiyurapp/widgets/auth/common/auth_page_layout.dart';
 import 'package:aiyurapp/widgets/auth/common/custom_input_field.dart';
@@ -14,6 +14,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final AuthenticationController authenticationModule = AuthenticationController();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -75,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
               final password = passwordController.text;
               final name = nameController.text;
 
-              final result = await createUserWithEmailAndPassword(email, password);
+              final result = await authenticationModule.createUserWithEmailAndPassword(email, password);
 
               if (result != null) {
                 Navigator.pop(context);
