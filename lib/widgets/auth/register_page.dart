@@ -1,10 +1,13 @@
 import 'package:aiyurapp/services/authentication_service.dart';
+import 'package:aiyurapp/services/tmdb_service.dart';
 import 'package:aiyurapp/widgets/auth/common/auth_buttom_text.dart';
 import 'package:aiyurapp/widgets/auth/common/auth_page_layout.dart';
 import 'package:aiyurapp/widgets/auth/common/custom_input_field.dart';
 import 'package:aiyurapp/widgets/auth/common/primary_button.dart';
 import 'package:aiyurapp/widgets/auth/login_page.dart';
 import 'package:flutter/material.dart';
+
+final tmdb = TmdbService();
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -75,26 +78,13 @@ class _RegisterPageState extends State<RegisterPage> {
               final password = passwordController.text;
               final name = nameController.text;
 
-              final result = await createUserWithEmailAndPassword(email, password);
+              final result = await createUserWithEmailAndPassword(
+                email,
+                password,
+              );
 
-              if (result != null) {
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, '/home');
-              } else {
-                setState(() {
-                  // 👇 Mostra erro visual
-                  emailError = "Email inválido ou já utilizado";
-                  passwordError = "Senha muito fraca ou inválida";
-                });
-
-                // opcional: snackbar
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Erro ao criar usuário"),
-                    backgroundColor: Colors.red,
-                  ),
-                );
-              }
+              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, '/home');
             },
           ),
 
@@ -103,8 +93,12 @@ class _RegisterPageState extends State<RegisterPage> {
           AuthBottomText(
             message: "Already have an account? ",
             clickableText: "Login",
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginPage()));
+            onTap: () async {
+              print(await tmdb.discoverMovies());
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginPage()),
+              );
             },
           ),
         ],

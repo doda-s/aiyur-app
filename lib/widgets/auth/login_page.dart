@@ -1,9 +1,13 @@
+import 'package:aiyurapp/services/tmdb_service.dart';
 import 'package:aiyurapp/widgets/auth/common/auth_buttom_text.dart';
 import 'package:aiyurapp/widgets/auth/common/auth_page_layout.dart';
 import 'package:aiyurapp/widgets/auth/common/custom_input_field.dart';
 import 'package:aiyurapp/widgets/auth/common/primary_button.dart';
 import 'package:aiyurapp/widgets/auth/register_page.dart';
 import 'package:flutter/material.dart';
+
+final tmdb = TmdbService();
+
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
@@ -53,7 +57,7 @@ class LoginPage extends StatelessWidget {
           AuthBottomText(
             message: "Don't have an account? ",
             clickableText: "Sign up",
-            onTap: () {
+            onTap: () async {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const RegisterPage()),
