@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:aiyurapp/widgets/home_page/movie_card.dart';
 import 'package:aiyurapp/widgets/profile_page/profile_page.dart';
 import 'package:aiyurapp/widgets/list_page/list_page.dart';
+import 'package:aiyurapp/services/tmdb_service.dart';
+import 'dart:convert';
 
 import '../top_app_bar/top_app_bar.dart';
+
+final tmdb = TmdbService();
 
 class PageContent extends StatefulWidget {
   const PageContent({super.key});
@@ -18,7 +22,34 @@ class _PageContentState extends State<PageContent> {
 
   final List<String> categories = ["All", "Trending", "Popular", "Upcoming"];
 
-  final List<Map<String, String>> movies = [
+  Map<dynamic, dynamic> movies = <dynamic, dynamic>{};
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadMovies();
+  }
+
+  Future<void> loadMovies() async {
+    try {
+      final result = await tmdb.discoverMovies();
+
+      for (var element in result['results']) {
+        print(element);
+      }
+
+      setState(() {
+        movies = result;
+        isLoading = false;
+      });
+    } catch (e) {
+      print("Erro carregando filmes: $e");
+      setState(() => isLoading = false);
+    }
+  }
+
+  final List<Map<String, String>> moviesList = [
     {
       'title': 'Coruja da Noite',
       'image':
@@ -54,9 +85,9 @@ class _PageContentState extends State<PageContent> {
   ];
 
   List<Map<String, String>> get filteredMovies {
-    if (_selectedCategoryIndex == 0) return movies;
+    if (_selectedCategoryIndex == 0) return moviesList;
     final category = categories[_selectedCategoryIndex];
-    return movies.where((m) => m['category'] == category).toList();
+    return moviesList.where((m) => m['category'] == category).toList();
   }
 
   Widget _getBody() {
@@ -83,8 +114,7 @@ class _PageContentState extends State<PageContent> {
                 padding: const EdgeInsets.all(16),
                 child: GridView.builder(
                   itemCount: filteredMovies.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
@@ -98,7 +128,7 @@ class _PageContentState extends State<PageContent> {
                         Navigator.pushNamed(
                           context,
                           '/movieDetail',
-                           arguments: {
+                          arguments: {
                             'title': movie['title']!,
                             'imageUrl': movie['image']!,
                           },

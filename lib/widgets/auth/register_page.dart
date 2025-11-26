@@ -1,13 +1,10 @@
 import 'package:aiyurapp/controllers/authentication_controller.dart';
-import 'package:aiyurapp/services/tmdb_service.dart';
 import 'package:aiyurapp/widgets/auth/common/auth_buttom_text.dart';
 import 'package:aiyurapp/widgets/auth/common/auth_page_layout.dart';
 import 'package:aiyurapp/widgets/auth/common/custom_input_field.dart';
 import 'package:aiyurapp/widgets/auth/common/primary_button.dart';
 import 'package:aiyurapp/widgets/auth/login_page.dart';
 import 'package:flutter/material.dart';
-
-final tmdb = TmdbService();
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -47,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
             label: "Full Name",
             icon: Icons.person_outline,
             controller: nameController,
-            errorText: nameError, // 👈 exibindo erro
+            errorText: nameError,
           ),
           const SizedBox(height: 16),
 
@@ -55,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
             label: "Email",
             icon: Icons.email_outlined,
             controller: emailController,
-            errorText: emailError, // 👈 exibindo erro
+            errorText: emailError,
           ),
           const SizedBox(height: 16),
 
@@ -64,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
             icon: Icons.lock_outline,
             controller: passwordController,
             obscureText: true,
-            errorText: passwordError, // 👈 exibindo erro
+            errorText: passwordError,
           ),
           const SizedBox(height: 24),
 
@@ -94,7 +91,6 @@ class _RegisterPageState extends State<RegisterPage> {
             message: "Already have an account? ",
             clickableText: "Login",
             onTap: () async {
-              print(await tmdb.discoverMovies());
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const LoginPage()),
