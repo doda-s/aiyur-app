@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 class MovieCard extends StatelessWidget {
   final String imageUrl;
   final String label;
+  final String description;
   final double height;
   final double borderRadius;
   final VoidCallback? onTap;
@@ -11,6 +13,7 @@ class MovieCard extends StatelessWidget {
     super.key,
     required this.imageUrl,
     required this.label,
+    required this.description,
     this.height = 10,
     this.borderRadius = 12,
     this.onTap,
@@ -42,7 +45,7 @@ class MovieCard extends StatelessWidget {
                 top: Radius.circular(borderRadius),
               ),
               child: Image.network(
-                imageUrl,
+                "https://image.tmdb.org/t/p/w500" + imageUrl,
                 width: double.infinity,
                 height: 80,
                 fit: BoxFit.cover,
@@ -67,10 +70,10 @@ class MovieCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const Text(
-                    "Descrição curta asdasdasdasdasasd asd",
+                  Text(
+                    description,
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w300,
                       color: Color.fromARGB(255, 29, 29, 29),

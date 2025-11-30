@@ -1,3 +1,4 @@
+import 'package:aiyurapp/models/movie_detail_args.dart';
 import 'package:aiyurapp/services/tmdb_service.dart';
 import 'package:aiyurapp/widgets/auth/login_page.dart';
 import 'package:aiyurapp/widgets/auth/register_page.dart';
@@ -45,11 +46,14 @@ class MyApp extends StatelessWidget {
 
       onGenerateRoute: (settings) {
         if (settings.name == '/movieDetail') {
-          final args = settings.arguments as Map<String, String>;
+          final args = settings.arguments as Map<String, dynamic>;
+
+          print(args["title"]);
+
           return MaterialPageRoute(
             builder: (context) => MovieDetailPage(
-              title: args['title']!,
-              imageUrl: args['imageUrl']!,
+              title: args["title"],
+              imageUrl: args["imageUrl"],
             ),
           );
         }

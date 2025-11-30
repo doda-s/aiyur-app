@@ -22,9 +22,7 @@ class TopAppBar extends StatelessWidget {
     return Container(
       height: 190,
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: const BoxDecoration(
-        color: Color(0xFFE0E0E0), 
-      ),
+      decoration: const BoxDecoration(color: Color(0xFFE0E0E0)),
       child: Column(
         children: [
           Row(
@@ -98,8 +96,9 @@ class CategorySelector extends StatelessWidget {
                       color: isSelected
                           ? Colors.white
                           : const Color(0xFF5E5E5E),
-                      fontWeight:
-                          isSelected ? FontWeight.bold : FontWeight.w500,
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.w500,
                       fontSize: 16,
                     ),
                   ),
@@ -215,6 +214,7 @@ class _PageContentState extends State<PageContent> {
                           },
                         );
                       },
+                      description: '',
                     );
                   },
                 ),

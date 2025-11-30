@@ -1,3 +1,4 @@
+import 'package:aiyurapp/models/movie_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:aiyurapp/widgets/home_page/movie_card.dart';
 
@@ -11,22 +12,14 @@ class ListsDetailPage extends StatefulWidget {
 class _ListsDetailPageState extends State<ListsDetailPage> {
   int? _selectedMovieIndex;
 
-  final List<Map<String, String>> exampleMovieList = [
-    {
-      'title': 'Coruja da Noite',
-      'image':
-          'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
-      'category': 'Trending',
-    },
-    {
-      'title': 'Amanhecer Sombrio',
-      'image': 'https://picsum.photos/200/301',
-      'category': 'New',
-    },
+  final List<MovieDetail> exampleMovieList = [
+    // Exemplo:
+    // MovieDetail(title: "Interestellar", imageUrl: "https://image.tmdb.org/t/p/w500/xyz.jpg"),
   ];
 
   void _confirmarRemocao(int index) {
     final movie = exampleMovieList[index];
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -39,7 +32,7 @@ class _ListsDetailPageState extends State<ListsDetailPage> {
           ),
         ),
         content: Text(
-          "Are you sure you want to remove '${movie["title"]}'?",
+          "Are you sure you want to remove '${movie.title}'?",
           style: const TextStyle(color: Color(0xFF5E5E5E)),
         ),
         actions: [
@@ -114,26 +107,29 @@ class _ListsDetailPageState extends State<ListsDetailPage> {
                             context,
                             '/movieDetail',
                             arguments: {
-                              'title': movie['title'] ?? '',
-                              'imageUrl': movie['image'] ?? '',
+                              'title': movie.title,
+                              'imageUrl': movie.imageUrl,
                             },
                           );
                         },
                         child: MovieCard(
-                          imageUrl: movie['image'] ?? '',
-                          label: movie['title'] ?? '',
+                          imageUrl: movie.imageUrl,
+                          label: movie.title,
+                          description: movie.description,
                           onTap: () {
                             Navigator.pushNamed(
                               context,
                               '/movieDetail',
                               arguments: {
-                                'title': movie['title']!,
-                                'imageUrl': movie['image']!,
+                                'title': movie.title,
+                                'imageUrl': movie.imageUrl,
                               },
                             );
                           },
                         ),
                       ),
+
+                      // Ícone de remover
                       Positioned(
                         top: 8,
                         right: 8,
