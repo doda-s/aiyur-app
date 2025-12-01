@@ -1,7 +1,23 @@
+import 'package:aiyurapp/services/cache.dart';
 import 'package:flutter/material.dart';
 
+final cache = CacheService();
+
 class MovieGenres extends StatelessWidget {
-  const MovieGenres({super.key});
+  final List<int> genreIds;
+  const MovieGenres({super.key, required this.genreIds});
+
+  Future<void> loadGenres() async {
+    try {
+      final genres = await cache.load("genres");
+
+      for (var genre in genres) {
+        print(genre);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

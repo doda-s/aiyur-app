@@ -48,12 +48,13 @@ class MyApp extends StatelessWidget {
         if (settings.name == '/movieDetail') {
           final args = settings.arguments as Map<String, dynamic>;
 
-          print(args["title"]);
+          print(args);
 
           return MaterialPageRoute(
             builder: (context) => MovieDetailPage(
               title: args["title"],
               imageUrl: args["imageUrl"],
+              description: args["description"],
             ),
           );
         }

@@ -1,5 +1,5 @@
 import 'package:aiyurapp/models/movie_detail.dart';
-import 'package:aiyurapp/widgets/movie_detail/moive_header.dart';
+import 'package:aiyurapp/widgets/movie_detail/movie_header.dart';
 import 'package:aiyurapp/widgets/movie_detail/movie_actions.dart';
 import 'package:aiyurapp/widgets/movie_detail/movie_genres.dart';
 import 'package:aiyurapp/widgets/movie_detail/movie_info_section.dart';
@@ -10,11 +10,15 @@ import 'package:flutter/material.dart';
 class MovieDetailPage extends StatefulWidget {
   final String title;
   final String imageUrl;
+  final String description;
+  final List<int> genreIds;
 
   const MovieDetailPage({
     super.key,
     required this.title,
     required this.imageUrl,
+    required this.description,
+    required this.genreIds,
   });
 
   @override
@@ -80,9 +84,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                   ),
 
                   const SizedBox(height: 24),
-                  const MovieGenres(),
+                  MovieGenres(genreIds: widget.genreIds),
                   const SizedBox(height: 24),
-                  const MovieSynopsis(),
+                  MovieSynopsis(description: widget.description),
                 ],
               ),
             ),

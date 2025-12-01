@@ -100,6 +100,8 @@ class _PageContentState extends State<PageContent> {
                           arguments: {
                             'title': movie['original_title']!,
                             'imageUrl': movie['poster_path']!,
+                            'description': movie['overview']!,
+                            'genreIds': movie['genre_ids']!,
                           },
                         );
                       },
