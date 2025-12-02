@@ -1,3 +1,4 @@
+import 'package:aiyurapp/controllers/authentication_controller.dart';
 import 'package:aiyurapp/controllers/movie_controller.dart';
 import 'package:aiyurapp/services/cache.dart';
 import 'package:aiyurapp/services/movie_service.dart';
@@ -15,6 +16,7 @@ final tmdb = TmdbService();
 final movieService = MovieService();
 final cacheService = CacheService();
 final movieController = MovieController();
+final authController = AuthenticationController();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

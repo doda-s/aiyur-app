@@ -1,4 +1,5 @@
 import 'package:aiyurapp/widgets/auth/login_page.dart';
+import 'package:aiyurapp/widgets/page_content/page_content.dart';
 import 'package:flutter/material.dart';
 import 'package:aiyurapp/services/movie_service.dart';
 

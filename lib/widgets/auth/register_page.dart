@@ -16,6 +16,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final AuthenticationController authenticationModule =
       AuthenticationController();
+
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -23,6 +24,69 @@ class _RegisterPageState extends State<RegisterPage> {
   String? emailError;
   String? passwordError;
   String? nameError;
+
+  bool loading = false;
+
+  Future<void> onRegisterPressed() async {
+    // ----------------------------
+    // 1. Resetar erros
+    // ----------------------------
+    setState(() {
+      emailError = null;
+      passwordError = null;
+      nameError = null;
+    });
+
+    final name = nameController.text.trim();
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    // ----------------------------
+    // 2. Validações
+    // ----------------------------
+    if (name.isEmpty || email.isEmpty || password.isEmpty) {
+      setState(() {
+        if (name.isEmpty) nameError = "Name cannot be empty";
+        if (email.isEmpty) emailError = "Email cannot be empty";
+        if (password.isEmpty) passwordError = "Password cannot be empty";
+      });
+      return;
+    }
+
+    // ----------------------------
+    // 3. Exibe loading
+    // ----------------------------
+    setState(() => loading = true);
+
+    // ----------------------------
+    // 4. Cria usuário
+    // ----------------------------
+    final result = await authenticationModule.createUserWithEmailAndPassword(
+      email,
+      password,
+    );
+
+    // Para loading
+    setState(() => loading = false);
+
+    // ----------------------------
+    // 5. Se erro, mostrar mensagem
+    // ----------------------------
+    if (result != null) {
+      // result geralmente contém o código do erro (ex: email já usado)
+      setState(() {
+        emailError = "Email already in use or invalid";
+        passwordError = "Check your password";
+      });
+      return;
+    }
+
+    // ----------------------------
+    // 6. Sucesso → redireciona
+    // ----------------------------
+    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, '/home');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,34 +127,19 @@ class _RegisterPageState extends State<RegisterPage> {
             obscureText: true,
             errorText: passwordError,
           ),
+
           const SizedBox(height: 24),
 
-          PrimaryButton(
-            text: "Sign Up",
-            onPressed: () async {
-              setState(() {
-                emailError = null;
-                passwordError = null;
-              });
-
-              final email = emailController.text.trim();
-              final password = passwordController.text;
-              final name = nameController.text;
-
-              final result = await authenticationModule
-                  .createUserWithEmailAndPassword(email, password);
-
-              Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, '/home');
-            },
-          ),
+          loading
+              ? const CircularProgressIndicator()
+              : PrimaryButton(text: "Sign Up", onPressed: onRegisterPressed),
 
           const SizedBox(height: 16),
 
           AuthBottomText(
             message: "Already have an account? ",
             clickableText: "Login",
-            onTap: () async {
+            onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const LoginPage()),
