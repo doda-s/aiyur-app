@@ -16,17 +16,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
-    
-    // TODO remover teste de autenticação
-    AuthenticationController _authController = AuthenticationController();
-    _authController.createUserWithEmailAndPassword("ph005009004@gmail.com", "pedrinho12345")
-    .then((errorCode) {
-      if (errorCode != null) {
-        print(errorCode);
-      } else {
-        print("Usuário criado!");
-      }
-    });
 
     return AuthPageLayout(
       title: "Login",

@@ -55,7 +55,7 @@ class CacheService {
     await prefs.remove(key + _timeSuffix);
   }
 
-  /// Limpa todo o cache da aplicação
+  /// Limpa o cache da aplicação
   Future<void> clear() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
