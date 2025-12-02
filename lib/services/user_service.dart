@@ -116,4 +116,46 @@ class UserService {
 
     await updateUser(updated);
   }
+
+  Future<void> createMediaList({
+    required String uid,
+    required String listName,
+  }) async {
+    final user = await getUserData(uid);
+    if (user == null) throw Exception("User not found!");
+
+    final exists = user.mediaLists.any((l) => l.listName == listName);
+    if (exists) {
+      throw Exception("The list'$listName' already exist.");
+    }
+
+    final newList = MediaListModel(
+      listName: listName,
+      mediaList: [],
+    );
+    final novasListas = [...user.mediaLists, newList];
+    final updated = user.copyWith(mediaLists: novasListas);
+
+    await updateUser(updated);
+  }
+
+  Future<void> deleteMediaList({
+    required String uid,
+    required String listName,
+  }) async {
+    final user = await getUserData(uid);
+    if (user == null) throw Exception("User not found!");
+
+    final exists = user.mediaLists.any((l) => l.listName == listName);
+    if (!exists) {
+      throw Exception("The list '$listName' do not exist.");
+    }
+    final newLists = user.mediaLists
+        .where((l) => l.listName != listName)
+        .toList();
+    final updated = user.copyWith(mediaLists: newLists);
+
+    await updateUser(updated);
+  }
+
 }
