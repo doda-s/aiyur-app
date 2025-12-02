@@ -14,7 +14,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final AuthenticationController authenticationModule = AuthenticationController();
+  final AuthenticationController authenticationModule =
+      AuthenticationController();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -43,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
             label: "Full Name",
             icon: Icons.person_outline,
             controller: nameController,
-            errorText: nameError, // 👈 exibindo erro
+            errorText: nameError,
           ),
           const SizedBox(height: 16),
 
@@ -51,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
             label: "Email",
             icon: Icons.email_outlined,
             controller: emailController,
-            errorText: emailError, // 👈 exibindo erro
+            errorText: emailError,
           ),
           const SizedBox(height: 16),
 
@@ -60,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
             icon: Icons.lock_outline,
             controller: passwordController,
             obscureText: true,
-            errorText: passwordError, // 👈 exibindo erro
+            errorText: passwordError,
           ),
           const SizedBox(height: 24),
 
@@ -76,26 +77,11 @@ class _RegisterPageState extends State<RegisterPage> {
               final password = passwordController.text;
               final name = nameController.text;
 
-              final result = await authenticationModule.createUserWithEmailAndPassword(email, password);
+              final result = await authenticationModule
+                  .createUserWithEmailAndPassword(email, password);
 
-              if (result != null) {
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, '/home');
-              } else {
-                setState(() {
-                  // 👇 Mostra erro visual
-                  emailError = "Email inválido ou já utilizado";
-                  passwordError = "Senha muito fraca ou inválida";
-                });
-
-                // opcional: snackbar
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Erro ao criar usuário"),
-                    backgroundColor: Colors.red,
-                  ),
-                );
-              }
+              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, '/home');
             },
           ),
 
@@ -104,8 +90,11 @@ class _RegisterPageState extends State<RegisterPage> {
           AuthBottomText(
             message: "Already have an account? ",
             clickableText: "Login",
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginPage()));
+            onTap: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginPage()),
+              );
             },
           ),
         ],

@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:aiyurapp/widgets/home_page/movie_card.dart';
 import 'package:aiyurapp/widgets/profile_page/profile_page.dart';
 import 'package:aiyurapp/widgets/list_page/list_page.dart';
+import 'package:aiyurapp/services/tmdb_service.dart';
+import 'dart:convert';
 
 import '../top_app_bar/top_app_bar.dart';
+
+final tmdb = TmdbService();
 
 class PageContent extends StatefulWidget {
   const PageContent({super.key});
@@ -18,42 +22,35 @@ class _PageContentState extends State<PageContent> {
 
   final List<String> categories = ["All", "Trending", "Popular", "Upcoming"];
 
-  final List<Map<String, String>> movies = [
-    {
-      'title': 'Coruja da Noite',
-      'image':
-          'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
-      'category': 'Trending',
-    },
-    {
-      'title': 'Filme do Sol',
-      'image':
-          'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
-      'category': 'Popular',
-    },
-    {
-      'title': 'Montanha Misteriosa',
-      'image': 'https://picsum.photos/200/300',
-      'category': 'Upcoming',
-    },
-    {
-      'title': 'Lago Sereno',
-      'image': 'https://picsum.photos/200/301',
-      'category': 'Trending',
-    },
-    {
-      'title': 'Floresta Sombria',
-      'image': 'https://picsum.photos/200/302',
-      'category': 'Popular',
-    },
-    {
-      'title': 'Horizonte Perdido',
-      'image': 'https://picsum.photos/200/303',
-      'category': 'Upcoming',
-    },
-  ];
+  List movies = [];
+  bool isLoading = true;
 
-  List<Map<String, String>> get filteredMovies {
+  @override
+  void initState() {
+    super.initState();
+    loadMovies();
+  }
+
+  Future<void> loadMovies() async {
+    try {
+      final result = await tmdb.discoverMovies();
+
+      var moviesList = [];
+
+      for (var element in result['results']) {
+        moviesList.add(element);
+      }
+
+      setState(() {
+        movies = moviesList;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() => isLoading = false);
+    }
+  }
+
+  List<dynamic> get filteredMovies {
     if (_selectedCategoryIndex == 0) return movies;
     final category = categories[_selectedCategoryIndex];
     return movies.where((m) => m['category'] == category).toList();
@@ -82,26 +79,24 @@ class _PageContentState extends State<PageContent> {
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: GridView.builder(
-                  itemCount: filteredMovies.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  itemCount: movies.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                   ),
                   itemBuilder: (context, index) {
-                    final movie = filteredMovies[index];
+                    final movie = movies[index];
+                    print(movie);
                     return MovieCard(
-                      imageUrl: movie['image']!,
+                      imageUrl: movie['backdrop_path'] ?? movie['poster_path'],
                       label: movie['title']!,
+                      description: movie['overview']!,
                       onTap: () {
                         Navigator.pushNamed(
                           context,
                           '/movieDetail',
-                           arguments: {
-                            'title': movie['title']!,
-                            'imageUrl': movie['image']!,
-                          },
+                          arguments: {'movieId': movie['id']!},
                         );
                       },
                     );

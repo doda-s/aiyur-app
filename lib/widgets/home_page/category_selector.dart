@@ -41,7 +41,9 @@ class CategorySelector extends StatelessWidget {
                     categories[index],
                     style: TextStyle(
                       color: const Color(0xFF4A4458),
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.w500,
                       fontSize: 16,
                     ),
                   ),
