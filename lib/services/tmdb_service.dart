@@ -61,4 +61,16 @@ class TmdbService {
   Future<Map<dynamic, dynamic>> getMovieById(int id) async {
     return await _tmdb.v3.movies.getDetails(id);
   }
+
+  Future<Map<dynamic, dynamic>> getUpcomingReleases({int page = 1}) async {
+    final now = DateTime.now();
+    final formattedDate =
+        "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+
+    return await _tmdb.v3.discover.getMovies(
+      page: page,
+      primaryReleaseDateGreaterThan: formattedDate,
+      sortBy: SortMoviesBy.primaryReleaseDateAsc,
+    );
+  }
 }

@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:aiyurapp/services/movie_service.dart';
 
 class MovieInfoSection extends StatefulWidget {
-  final String title;
-  final double voteAverage;
-  final int movieId;
-  final String releaseDate;
+  final String? title;
+  final double? voteAverage;
+  final int? movieId;
+  final String? releaseDate;
 
   const MovieInfoSection({
     super.key,
-    required this.title,
-    required this.movieId,
-    required this.voteAverage,
-    required this.releaseDate,
+    this.title,
+    this.movieId,
+    this.voteAverage,
+    this.releaseDate,
   });
 
   @override
@@ -21,7 +21,7 @@ class MovieInfoSection extends StatefulWidget {
 }
 
 class _MovieInfoSectionState extends State<MovieInfoSection> {
-  int? runtime; // duração do filme
+  int? runtime;
   bool loading = true;
 
   @override
@@ -32,10 +32,15 @@ class _MovieInfoSectionState extends State<MovieInfoSection> {
 
   Future<void> loadMovieDetails() async {
     try {
-      final movie = await tmdb.getMovieById(widget.movieId);
+      if (widget.movieId == null) {
+        setState(() => loading = false);
+        return;
+      }
+
+      final movie = await tmdb.getMovieById(widget.movieId!);
 
       setState(() {
-        runtime = movie["runtime"]; // pega runtime do MovieDetail
+        runtime = movie["runtime"];
         loading = false;
       });
     } catch (e) {
@@ -46,14 +51,14 @@ class _MovieInfoSectionState extends State<MovieInfoSection> {
 
   @override
   Widget build(BuildContext context) {
-    final formattedVote = (widget.voteAverage * 10).toStringAsFixed(
-      0,
-    ); // 0.0 → “67%”
+    // Se voteAverage for nulo → "--%"
+    final formattedVote = widget.voteAverage != null
+        ? "${(widget.voteAverage! * 10).toStringAsFixed(0)}%"
+        : "--%";
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // --- Título + Nota ---
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -63,7 +68,7 @@ class _MovieInfoSectionState extends State<MovieInfoSection> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.title,
+                    widget.title ?? "Sem título",
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -80,7 +85,7 @@ class _MovieInfoSectionState extends State<MovieInfoSection> {
                       color: Colors.yellow,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text("⭐ $formattedVote%"),
+                    child: Text("⭐ $formattedVote"),
                   ),
                 ],
               ),
@@ -94,14 +99,13 @@ class _MovieInfoSectionState extends State<MovieInfoSection> {
           children: [
             const Icon(Icons.calendar_today, size: 18),
             const SizedBox(width: 8),
-            Text(widget.releaseDate),
+            Text(widget.releaseDate ?? "--"),
             const SizedBox(width: 20),
 
             const Icon(Icons.access_time, size: 18),
             const SizedBox(width: 8),
-
             loading
-                ? const Text("...") // enquanto carrega
+                ? const Text("...")
                 : Text(runtime != null ? "$runtime min" : "--"),
           ],
         ),
