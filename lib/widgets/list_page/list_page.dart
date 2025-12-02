@@ -1,3 +1,6 @@
+import 'package:aiyurapp/services/auth_service.dart';
+import 'package:aiyurapp/services/user_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:aiyurapp/models/user_movie_list.dart';
 
