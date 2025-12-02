@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class MovieSynopsis extends StatelessWidget {
   final String description;
-
   const MovieSynopsis({super.key, required this.description});
 
   @override

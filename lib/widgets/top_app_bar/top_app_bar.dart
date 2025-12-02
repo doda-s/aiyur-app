@@ -20,9 +20,7 @@ class TopAppBar extends StatelessWidget {
     return Container(
       height: 190,
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: const BoxDecoration(
-        color: Color(0xFFE0E0E0),
-      ),
+      decoration: const BoxDecoration(color: Color(0xFFE0E0E0)),
       child: Column(
         children: [
           Row(
