@@ -1,3 +1,7 @@
+import 'package:aiyurapp/models/media_list_item_model.dart';
+import 'package:aiyurapp/services/auth_service.dart';
+import 'package:aiyurapp/services/user_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
