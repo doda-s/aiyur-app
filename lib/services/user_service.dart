@@ -12,27 +12,24 @@ class UserService {
   late final String _collectionName = _databaseConfig.userCollectionName;
 
   Future<void> registerUserInDatabase(User user) async {
-    final List<MediaListModel> mediaListModelList = [
-      MediaListModel(listName: "Favorites",
-          mediaList: []
-      )
-    ];
+    print("Ristrando usuário no database..."); // TODO remover debug
     final UserModel userModel = UserModel(
         userUid: user.uid,
         nickname: user.email!,
-        mediaLists: mediaListModelList,
+        mediaLists: [
+          MediaListModel(
+              listName: "Favorites",
+              mediaList: [],
+          )
+        ],
     );
-    await createNewUserDocument(userModel);
+    await setUserDocumentInDataBase(userModel);
   }
 
-  Future<void> createNewUserDocument(UserModel userModel) async {
+  Future<void> setUserDocumentInDataBase(UserModel userModel) async {
+    print("Creating user document in database..."); // TODO remover debug
     if(await checkDocumentByUserUid(userModel.userUid) == null) {
-      await _database.collection(_collectionName).doc(userModel.userUid).set({
-        "user_uid": userModel.userUid,
-        "nickname": userModel.nickname,
-        "biography": userModel.biography,
-        "mediaLists": userModel.mediaLists,
-      });
+      await _database.collection(_collectionName).doc(userModel.userUid).set(userModel.toJson());
     }
   }
 
@@ -43,6 +40,23 @@ class UserService {
     DocumentSnapshot userDoc = await _database.collection(_collectionName).doc(userUid).get();
     if(userDoc.exists) {
       return userDoc;
+    }
+    return null;
+  }
+
+  Future<UserModel?> getUserData(String? userUid) async {
+    print("Getting user data..."); // TODO remove debug
+    if(userUid != null) {
+      var _doc = await _database.collection(_collectionName).doc(userUid).get();
+      var _data = _doc.data();
+
+      UserModel userModel;
+      if(_data != null) {
+        print("User model from JSON..."); // TODO remove debug
+        userModel = UserModel.fromJson(_data);
+        print(userModel.toJson());
+        return userModel;
+      }
     }
     return null;
   }
