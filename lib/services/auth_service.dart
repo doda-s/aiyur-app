@@ -1,4 +1,5 @@
 import 'package:aiyurapp/models/auth_result.dart';
+import 'package:aiyurapp/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -7,18 +8,21 @@ class AuthService {
   static final AuthService instance = AuthService._();
 
   final _auth = FirebaseAuth.instance;
+  final _userService = UserService.instance;
 
   Future<AuthResult> createUserWithEmailAndPassword(String emailAddress,
       String password) async {
     String exceptionCode;
     try {
-      print("Ai, estou registrando");
       final UserCredential _userCredential = await _auth
           .createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
-      print("Usuário registrado XD");
+      User? userObject = _userCredential.user;
+      if (userObject != null) {
+        _userService.registerUserInDatabase(userObject);
+      }
       return AuthResult(userCredential: _userCredential);
     } on FirebaseAuthException catch (e) {
       exceptionCode = e.code;
