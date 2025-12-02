@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({super.key});
+  final Function(String) onSearch; // <-- callback para o pai
+
+  const SearchBarWidget({super.key, required this.onSearch});
 
   @override
   State<StatefulWidget> createState() => _SearchBarWidgetState();
@@ -18,7 +20,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   }
 
   void _handleSubmit(String text) {
-    print(text);
+    widget.onSearch(text); // <-- envia para o pai
   }
 
   @override
@@ -27,7 +29,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       padding: const EdgeInsets.all(8.0),
       height: 50,
       decoration: BoxDecoration(
-        color: Color(0xFFF5F5F5),
+        color: const Color(0xFFF5F5F5),
         border: Border.all(color: Colors.grey, width: 1),
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
       ),
@@ -37,13 +39,15 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             child: TextField(
               controller: _controller,
               onChanged: _onSearchChanged,
-              onSubmitted: (teste) => {_handleSubmit(teste)},
+              onSubmitted: _handleSubmit,
               decoration: const InputDecoration(
                 icon: Icon(Icons.search),
                 hintText: 'Search movies...',
               ),
             ),
           ),
+
+          // botão de limpar
           if (_searchText.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.clear, color: Colors.grey),
@@ -52,6 +56,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   _controller.clear();
                   _searchText = '';
                 });
+
+                widget.onSearch(""); // <-- notifica busca vazia
               },
             ),
         ],

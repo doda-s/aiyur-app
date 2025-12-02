@@ -19,6 +19,9 @@ class _PageContentState extends State<PageContent> {
   int _currentBottomIndex = 0;
   int _selectedCategoryIndex = 0;
 
+  bool _isSearching = false; // <-- flag para busca
+  List _searchResults = []; // <-- resultados da busca
+
   final List<String> categories = ["All", "Trending", "Popular", "Upcoming"];
 
   // ---- ESTADOS POR CATEGORIA ----
@@ -62,18 +65,37 @@ class _PageContentState extends State<PageContent> {
   @override
   void initState() {
     super.initState();
-
-    // Carrega a categoria inicial
     loadCategory("All");
 
-    // Listener do scroll infinito
     _scrollController.addListener(() {
+      if (_isSearching) return; // <-- desabilita scroll infinito em busca
+
       final category = categories[_selectedCategoryIndex];
 
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 200) {
         loadMoreForCategory(category);
       }
+    });
+  }
+
+  // ---- BUSCA ----
+  Future<void> _searchMovies(String query) async {
+    if (query.isEmpty) {
+      setState(() {
+        _isSearching = false;
+        _searchResults = [];
+      });
+      return;
+    }
+
+    _isSearching = true;
+    setState(() {});
+
+    final result = await tmdb.searchMovies(query);
+
+    setState(() {
+      _searchResults = result["results"] ?? [];
     });
   }
 
@@ -117,6 +139,8 @@ class _PageContentState extends State<PageContent> {
 
   // ---- CARREGAR MAIS ----
   Future<void> loadMoreForCategory(String category) async {
+    if (_isSearching) return; // <-- desativa quando está buscando
+
     if (isLoadingMoreByCategory[category] == true ||
         hasMoreByCategory[category] == false)
       return;
@@ -171,13 +195,10 @@ class _PageContentState extends State<PageContent> {
     switch (_currentBottomIndex) {
       case 0:
         return _buildMoviesPage();
-
       case 1:
         return const ProfilePage();
-
       case 2:
         return const MyListsPage();
-
       default:
         return const SizedBox();
     }
@@ -185,9 +206,13 @@ class _PageContentState extends State<PageContent> {
 
   Widget _buildMoviesPage() {
     final category = categories[_selectedCategoryIndex];
-    final movies = moviesByCategory[category]!;
-    final loading = isLoadingByCategory[category]!;
-    final loadingMore = isLoadingMoreByCategory[category]!;
+    final movies = _isSearching ? _searchResults : moviesByCategory[category]!;
+
+    final loading = _isSearching ? false : isLoadingByCategory[category]!;
+
+    final loadingMore = _isSearching
+        ? false
+        : isLoadingMoreByCategory[category]!;
 
     return Column(
       children: [
@@ -202,6 +227,9 @@ class _PageContentState extends State<PageContent> {
           ),
           selectedCategoryIndex: _selectedCategoryIndex,
           onCategorySelected: (index) {
+            _isSearching = false;
+            _searchResults = [];
+
             final newCategory = categories[index];
             _selectedCategoryIndex = index;
 
@@ -211,7 +239,10 @@ class _PageContentState extends State<PageContent> {
 
             setState(() {});
           },
+
+          onSearch: _searchMovies, // <-- integração com TopAppBar
         ),
+
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(16),

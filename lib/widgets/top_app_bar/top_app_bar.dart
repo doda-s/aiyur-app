@@ -8,11 +8,14 @@ class TopAppBar extends StatelessWidget {
   final int selectedCategoryIndex;
   final Function(int) onCategorySelected;
 
+  final Function(String) onSearch; // <-- callback de busca
+
   const TopAppBar({
     super.key,
     required this.title,
     required this.selectedCategoryIndex,
     required this.onCategorySelected,
+    required this.onSearch, // <-- obrigatório
   });
 
   @override
@@ -37,8 +40,14 @@ class TopAppBar extends StatelessWidget {
               ),
             ],
           ),
+
           const SizedBox(height: 8),
-          const SearchBarWidget(),
+
+          // ====== AJUSTE: SearchBarWidget com callback ======
+          SearchBarWidget(
+            onSearch: onSearch, // <-- repassa para cima
+          ),
+
           CategorySelector(
             selectedIndex: selectedCategoryIndex,
             onCategorySelected: onCategorySelected,
