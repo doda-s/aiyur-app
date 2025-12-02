@@ -1,15 +1,20 @@
-import 'package:aiyurapp/models/movie_detail_args.dart';
+import 'package:aiyurapp/controllers/movie_controller.dart';
+import 'package:aiyurapp/services/cache.dart';
+import 'package:aiyurapp/services/movie_service.dart';
 import 'package:aiyurapp/services/tmdb_service.dart';
 import 'package:aiyurapp/widgets/auth/login_page.dart';
 import 'package:aiyurapp/widgets/auth/register_page.dart';
+import 'package:aiyurapp/widgets/movie_detail/movie_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:aiyurapp/widgets/page_content/page_content.dart';
 import 'package:aiyurapp/widgets/list_page/list_detail_page.dart';
-import 'package:aiyurapp/widgets/movie_detail/movie_detail.dart';
 import 'package:aiyurapp/modules/firebase_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final tmdb = TmdbService();
+final movieService = MovieService();
+final cacheService = CacheService();
+final movieController = MovieController();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,14 +53,8 @@ class MyApp extends StatelessWidget {
         if (settings.name == '/movieDetail') {
           final args = settings.arguments as Map<String, dynamic>;
 
-          print(args);
-
           return MaterialPageRoute(
-            builder: (context) => MovieDetailPage(
-              title: args["title"],
-              imageUrl: args["imageUrl"],
-              description: args["description"],
-            ),
+            builder: (context) => MovieDetailPage(movieId: args["movieId"]),
           );
         }
         return null;

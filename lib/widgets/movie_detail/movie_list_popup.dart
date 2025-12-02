@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class MovieListPopup {
   static void showListSelection({
     required BuildContext context,
-    required List<MovieDetail> lists,
-    required Function(MovieDetail) onSelected,
+    required List<MovieList> lists,
+    required Function(MovieList) onSelected,
   }) {
     showDialog(
       context: context,

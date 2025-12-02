@@ -32,11 +32,7 @@ class TopAppBar extends StatelessWidget {
                 onPressed: null,
               ),
               Expanded(child: title),
-              ProfileButton(
-                onPressed: () {
-                  print("clicou no profile superior");
-                },
-              ),
+              ProfileButton(onPressed: () {}),
             ],
           ),
           const SizedBox(height: 8),

@@ -30,6 +30,11 @@ class TmdbService {
     _initialized = true;
   }
 
+  Future<List<dynamic>> getMovieGenres() async {
+    final response = await _tmdb.v3.genres.getMovieList();
+    return response["genres"] ?? [];
+  }
+
   Future<Map<dynamic, dynamic>> getPopular({int page = 1}) async {
     return await _tmdb.v3.movies.getPopular(page: page);
   }

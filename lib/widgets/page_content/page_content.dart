@@ -41,7 +41,6 @@ class _PageContentState extends State<PageContent> {
         moviesList.add(element);
       }
 
-      print("fez uma query");
       setState(() {
         movies = moviesList;
         isLoading = false;
@@ -97,12 +96,7 @@ class _PageContentState extends State<PageContent> {
                         Navigator.pushNamed(
                           context,
                           '/movieDetail',
-                          arguments: {
-                            'title': movie['original_title']!,
-                            'imageUrl': movie['poster_path']!,
-                            'description': movie['overview']!,
-                            'genreIds': movie['genre_ids']!,
-                          },
+                          arguments: {'movieId': movie['id']!},
                         );
                       },
                     );

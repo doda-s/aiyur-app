@@ -17,6 +17,10 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     });
   }
 
+  void _handleSubmit(String text) {
+    print(text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,6 +37,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             child: TextField(
               controller: _controller,
               onChanged: _onSearchChanged,
+              onSubmitted: (teste) => {_handleSubmit(teste)},
               decoration: const InputDecoration(
                 icon: Icon(Icons.search),
                 hintText: 'Search movies...',
